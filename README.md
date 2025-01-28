@@ -9,3 +9,7 @@ This is a simple To-Do list application built with HTML, CSS, and JavaScript. Th
 4. **Task Suggestion**: If the input field is left empty, a random task is suggested.
 5. **Persistent Data**: The tasks are stored in local storage, so even if the page is reloaded, the tasks will persist.
 
+
+
+Uploading screen-recording-2025-01-29-020628_OzoAL2uN.mp4…
+
