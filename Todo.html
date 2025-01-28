@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="list1.png">
+    <title>To Do List</title>
+
+    <!-- Inline CSS -->
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Your CSS styles here */
+        :root {
+            --white-alpha-40: rgba(255, 255, 255, 0.40);
+            --white-alpha-25: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes zoomInOut {
+
+            0%,
+            100% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceTop {
+
+            0%,
+            100% {
+                transform: translateY(-50px);
+            }
+
+            50% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Background Circles */
+        .bg-circles div {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .bg-circles .circle-1 {
+            height: 80px;
+            width: 80px;
+            background-color: blue;
+            left: 10%;
+            top: 20%;
+            opacity: 0.3;
+            filter: blur(10px);
+            animation: bounceTop 5s ease-in-out infinite;
+        }
+
+        .bg-circles .circle-2 {
+            height: 150px;
+            width: 150px;
+            background-color: #cc2b5e;
+            left: 29%;
+            top: 60%;
+            opacity: 0.4;
+            filter: blur(10px);
+            animation: zoomInOut 8s linear infinite;
+        }
+
+        .bg-circles .circle-3 {
+            height: 150px;
+            width: 150px;
+            background-color: #57bacd;
+            right: 28%;
+            top: 15%;
+            opacity: 0.6;
+            filter: blur(10px);
+            animation: zoomInOut 8s linear infinite;
+        }
+
+        .bg-circles .circle-4 {
+            height: 80px;
+            width: 80px;
+            background-color: red;
+            right: 10%;
+            top: 80%;
+            opacity: 0.6;
+            filter: blur(10px);
+            animation: bounceTop 8s linear infinite;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #d48080, #ffb88c);
+            padding: 10px;
+        }
+
+        .todo-app {
+            width: 100%;
+            max-width: 540px;
+            background-color: var(--white-alpha-25);
+            border: 1px solid var(--white-alpha-40);
+            margin: 100px auto 20px;
+            padding: 40px 30px 70px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 25px 5px rgba(110, 104, 104, 0.7);
+        }
+
+        .todo-app h2 {
+            color: #cc2b5e;
+            display: flex;
+            font-size: 30px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .todo-app h2 img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ee8e8e;
+            border-radius: 10px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            color: #000;
+            background: transparent;
+            padding: 10px;
+            font-weight: 14px;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            padding: 16px 50px;
+            background: #ed5f4f;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            background-color: #cc2b5e;
+            color: #fff;
+        }
+
+        ul li {
+            list-style: none;
+            font-size: 17px;
+            padding: 12px 8px 12px 50px;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            border-radius: 50px;
+            background-image: url('icon.png');
+            background-size: cover;
+            background-position: center;
+            top: 7px;
+            left: 8px;
+        }
+
+        ul li.checked {
+            color: #555;
+            text-decoration:dashed  rgb(30, 1, 57) line-through ;
+            font-family: Impact, Charcoal, sans-serif;
+            font-size: 16px;
+            letter-spacing: 1.2px;
+            word-spacing: 0.8px;
+            color: #000000;
+            font-weight: 400;
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+        }
+
+        ul li.checked::before {
+            background-image:url('check.png');
+            height: 50px;
+            width: 50px;
+            margin-top: -8px;
+            margin-left: -10px;
+        }
+
+        ul li span {
+            position: absolute;
+            right: 0;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            color: #555;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        ul li span:hover {
+            background: #f18484;
+            animation: zoomInOut 4s linear infinite;
+            border-radius: 50%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 760px) {
+            .container {
+                height: 100%;
+                width: 100%;
+            }
+
+            .row {
+                max-width: 400px;
+            }
+
+            button {
+                max-width: 400px;
+                padding: 10px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- **** Background Circles Start **** -->
+    <div class="bg-circles">
+        <div class="circle-1"></div>
+        <div class="circle-2"></div>
+        <div class="circle-3"></div>
+        <div class="circle-4"></div>
+    </div>
+
+    <!-- **** List Container Start Here **** -->
+
+    <div class="container">
+        <div class="todo-app">
+            <h2><img src="list1.png" alt="">To-Do List</h2>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add your task ...">
+                <button onclick="addTask()" id="add">Add</button>
+            </div>
+            <ul id="list-container">
+            </ul>
+        </div>
+    </div>
+
+    <!-- Inline JavaScript -->
+    <script>
+        const inputbox = document.getElementById('input-box');
+        const listcontainer = document.getElementById('list-container');
+        inputbox.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+        function addTask() {
+        if (inputbox.value === '') {
+            suggestTask();
+            return;
+        } else {
+            let li = document.createElement("li");
+            li.innerHTML = inputbox.value;
+            listcontainer.appendChild(li);
+            let span = document.createElement("span");
+            span.innerHTML = "\u00d7";
+            li.appendChild(span);
+        }
+        inputbox.value = "";
+        savedata();
+    }
+
+    listcontainer.addEventListener("click", function (e) {
+        if (e.target.tagName === "LI") {
+            e.target.classList.toggle("checked");
+            savedata();
+        } else {
+            if (e.target.tagName === "SPAN") {
+                e.target.parentElement.remove();
+                savedata();
+            }
+        }
+    }, false);
+
+    function suggestTask() {
+        const tasks = ["Exercise for 30 minutes", "Read a book for 20 minutes", "Write in a journal", "Make a to-do list for tomorrow", "Call a friend or family member", "Meditate for 10 minutes","Make Assignment","Solve Problem of the Day" , "Cook Your Code on CodeChef" ,"Call Your Loved one","Say that :'You Love Yourself'"];
+        const randomIndex = Math.floor(Math.random() * tasks.length);
+        const suggestedTask = tasks[randomIndex];
+        inputbox.value = suggestedTask;
+    }
+
+    function savedata() {
+        localStorage.setItem("data", listcontainer.innerHTML);
+    }
+
+    function showlist() {
+        listcontainer.innerHTML = localStorage.getItem("data");
+    }
+    
+
+    showlist();
+    
+
+    </script>
+</body>
+
+</html>
