@@ -10,6 +10,5 @@ This is a simple To-Do list application built with HTML, CSS, and JavaScript. Th
 5. **Persistent Data**: The tasks are stored in local storage, so even if the page is reloaded, the tasks will persist.
 
 
-
-Uploading screen-recording-2025-01-29-020628_OzoAL2uN.mp4…
+https://github.com/user-attachments/assets/a9a2eb2d-955e-41da-ac88-26f51d6e27d0
 
